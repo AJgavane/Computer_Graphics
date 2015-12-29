@@ -1,0 +1,266 @@
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<h1 style="text-align: center;">
+			<span style="font-size:28px;">Computer Graphics</span></h1>
+		<h2 style="text-align: center;">
+			<span style="font-size:24px;">Assignment - 1</span></h2>
+		<p style="text-align: center;">
+			<span style="font-size:20px;">Ajinkya Gavane (2011B5A7527H), Sudarshan Ghonge (2011B5A7230H), Saurav Agarwalla (2011B5A7522H)</span></p>
+		<p style="text-align: center;">
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<span style="font-size:24px;">Table of Contents</span></h4>
+		<ol>
+			<li>
+				<a href="#Introduction"><span style="font-size:18px;">Introduction</span></a></li>
+				<ol>
+					<li>
+						<span style="font-size: 18px;"><a href="#Compile">How to compile</a></span></li>
+					<li>
+						<a href="#Use"><span style="font-size: 18px;">How to use</span></a></li>
+				</ol>
+			<li>
+				<a href="#Implementation"><span style="font-size: 18px;">Implementation</span></a>
+				<ol>
+					<li>
+						<span style="font-size: 18px;"><a href="#Line">Line</a></span></li>
+					<li>
+						<a href="#Circle"><span style="font-size: 18px;">Circle</span></a></li>
+					<li>
+						<a href="#GraphPlotting"><span style="font-size: 18px;">Graph Plotting</span></a></li>
+					<li>
+						<a href="#EnergyMinimization"><span style="font-size: 18px;">Energy Minimization</span></a></li>
+				</ol>
+			</li>
+			<li>
+				<span style="font-size: 18px;"><a href="#Results">Results</a></span></li>
+		</ol>
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<a name="Introduction"><span style="font-size:24px;">1. Introduction</span></a></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">
+			The goal of this assignment is to implement a graph drawing algorithm for general undirected graphs. This task is 
+           basically divided into 3 parts - draw edges of the graph using Bresenham's line drawing algorithm, draw nodes of the
+           graph using the mid-point circle drawing algorithm and use the method given in the paper to minimize the energy of 
+           the graph. 
+           <br/>
+           <br/>
+           The program combines the notions of line, point and circle drawing and drawing aesthetically pleasing symmetrical graphs. This
+           "symmetry" is attained mathematically by minimizing the energy of the graph. The algorithm models the location and 
+           forced between the nodes as if they were connected by a spring. The program creates an interface to take as 
+           input points (nodes) and the edges connecting them interactively. It then minimizes the energy of the system and redraws
+           the graph.
+           <br/>
+           <br/>
+           
+           <h3 style="margin-left: 40px;">
+			<a name="Compile"><span style="font-size:22px;">1.1. How to compile</span></a></h3>
+			<p style="margin-left: 40px;margin-left: 60px;">
+			<span style="font-size:18px;">
+            $ g++ energy_minimization.cpp main.cpp -o assignment-1 -lglut -lGL -lGLU -lm
+			</span></p>
+			</p>
+           
+           <h3 style="margin-left: 40px;">
+			<a name="Use"><span style="font-size:22px;">1.2. How to use</span></a></h3>
+			<p style="margin-left: 40px;margin-left: 60px;">
+			<span style="font-size:18px;">
+           Left click anywhere on the window to draw a node. Creating consecutive nodes will connect them to
+           the previous node by a line, automatically. Right click anywhere on the window to "lift the pen up". Now, click on any of
+           the existing nodes followed by a click on the node you want to join it with, and an edge connecting the two is drawn
+           automatically.
+           <br/>
+           At any point of time, press 'c' on the keyboard to clear the screen. Press 'd' on the keyboard to draw the final
+           energy-minimized graph.
+           <br/>
+           Press 'q' to quit.
+			</span></p>
+			</p>
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<span style="font-size:24px;"><a name="Implementation"></a>2. Implementation</span></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The implementation details are as follows: </span></p>
+		<h3 style="margin-left: 40px;">
+			<a name="Line"><span style="font-size:22px;">2.1. Line</span></a></h3>
+		<p style="margin-left: 60px;">
+			<span style="font-size:18px;">We used <b>Bresenham&#39;s</b> line drawing algorithm for line drawing. While implementing this algorithm we faced following difficulties. <!-- creating subsections for the given section --></span></p>
+		<h4 style="margin-left: 60px;">
+			<a name="DifficultyLine1"><span style="font-size:20px;"> 2.1.1. Line was being drawn in first quadrant only</span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">In this algorithm we were drawing lines where the initial coordinates (x0, y0) were smaller than final coordinates (xmax, ymax). But, we faced problem when the initial coordinates were greater than the final coordinates. For example initial point was at the origin and final point was in the second or third quadrant. To resolve this, we made a small change in the algorithm. Initially we were increasing x or y coordinate by 1 depending on the slope of the line. However, in the case where the slope was negative, there was a need to decrease them by 1. We, therefore, put a condition on the increment value. This condition would decide whether to increment or decrement x, y values. To come up with this condition on increment we all three worked out for each quadrant and studied the line drawing algorithm and came up with satisfactory condition. </span></p>
+		<!-- Subsection creation ends -->
+		<p>
+			&nbsp;</p>
+		<h3 style="margin-left: 40px;">
+			<a name="Circle"><span style="font-size:22px;">2.2 Circle</span></a></h3>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">For Circle drawing we used the concept of <b>8-way symmetry</b> in a circle. We wrote code to draw only one-eight of the circle present in the second octant and then replicated it in the rest of the 7 octants. We used the same midpoint algorithm similar to the Bresenham algorithm. While plotting we faced the following difficulties. <!-- creating subsections for the given section --></span></p>
+		<h4 style="margin-left: 60px;">
+			<a name="DifficultyLine1"><span style="font-size:20px;"> 2.2.1. Circle was being drawn at origin</span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">Only quarter of a circle was being drawn at the bottom-left corner of the window (origin). To counter this, we shifted all the points of circle by adding coordinates of its center to them. </span></p>
+		<h4 style="margin-left: 60px;">
+			<a name="DifficultyLine1"><span style="font-size:20px;"> 2.2.2. Resizing the window caused circles to scale into elipse</span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">We took care of this by using a function glViewport() provided in openGL and resized the entire drawing. </span></p>
+		<!-- Subsection creation ends -->
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<a name="GraphPlotting"><span style="font-size:24px;">2.3 Graph Plotting</span></a></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">For plotting a graph on the window screen, the main objective in our mind was to make the interface as user friendly as possible to plot points and make the connections between them. We started with the following cases and built our code around it. <!-- creating subsections for the given section --></span></p>
+		<h4 style="margin-left: 60px;">
+			<a name="DifficultyLine1"><span style="font-size:20px;"> 2.3.1. Continuous Graph Plotting</span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">Our requirement was as follows: when a user clicks an area inside the window, the program plots a pixel (&#39;a&#39;, say) at the corresponding location and draws a circle around it. This also makes that point the <b>current</b> point. Clicking anywhere in the area inside the screen and outside the circle surrounding &#39;a&#39;, creates another point (pixel + circle around it) similar to &#39;a&#39; and <b>joins</b> &#39;a&#39; to &#39;b&#39; . There would ofcourse, be no <b>current</b> point just before plotting the first point. Hence the first click would only result in a pixel and circle plot.<br />
+			After implementing the above, we were able to draw linear continuous graphs. But our task was not yet complete. We were able to draw only chains. We needed to be able to draw a graph which was multiply connected. So this was our second task; to implement drawing of multiply connected graphs. </span></p>
+		<h4 style="margin-left: 60px;">
+			<a name="DifficultyLine1"><span style="font-size:20px;"> 2.3.2. Multiply connected Graph </span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">We wanted that the user should be able to draw only using a mouse and no interaction from a keyboard. So we used mouse&#39;s right click to do so. We required that upon right clicking the mouse button, the program should leave control of the <b>current</b> point. Keeping all this in mind we worked on the code and made it simpler to give user input.<br />
+			This part was done successfully and the issue we encountered was selection of a previously created pixel. This was required in order to make connections between exisiting points which were not current otherwise, graph drawing would not be possible. This became our third problem to resolve and get a solution for it. </span></p>
+		<h4 style="margin-left: 60px;">
+			<a name="DifficultyLine1"><span style="font-size:20px;"> 2.3.3. Select previously plotted pixel </span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">Keepin our goal of user friendly input in mind we wanted that user should be able to select the previous pixel without and difficulty. We achieved this storing the co-ordinates of the already plotted pixels in an array and checking if a mouse clicked pixel already belonged to the array. But the drawback we faced was that it would be difficult for the user to click the exact same pixel and he would not be able to pinpoint the same pixel. So this was our next problem that it should be easy for user to select previous plotted pixel. We resolved this issue by creating a &#39;vicinity&#39; area of for each point plotted described by the circle surrounding it. We enabled the program to select a previously plotted pixel if the user input mouse click was inside this &#39;vicinity&#39; region. This also made that point the current point.We made sure that the circle was large enough to make clicking inside it easy.<br />
+			This helped us a lot as it made our work easy to give inputs while debugging the energy minimization part.<br />
+			We were all set with our interactive display and all that remained was a framework to package the points/ nodes/vertices and their correspoding edges into a data structure to send it over to the energy minimization algorithm. The data about the points/nodes was already available in the array of plotted points. Packaging the edges was the challenge. </span></p>
+		<h4 style="margin-left: 60px;">
+			<a name="DifficultyLine1"><span style="font-size:20px;"> 2.3.4. Keeping track of edges </span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">There were chiefly three possibilities for any two pair points (say, i and j):</br> (i) i and j were the same point. </br>(ii) i and j were different and had a direct edge between them. </br>(iii) i and j were different and had no direct edge between them. </br></br>We stored information about the edges using an adjacency matrix of dimension (n x n) where n is the number of vertices. Each entry in the matrix would reveal information about the edge between any two points.</br> (i) For i==j, the entry would be 0. </br>(ii) For i&ne;j, the entry would be 1 if there was a direct edge.</br> (iii) For i&ne;j, the entry would be infinity if there was no direct edge. </span></p>
+		<!-- Subsection creation ends -->
+		<p>
+			&nbsp;</p>
+		<h3 style="margin-left: 40px;">
+			<a name="EnergyMinimization"><span style="font-size:22px;">2.4 Energy Minimization</span></a></h3>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The energy minimization algorithm described in &quot;An Algorithm for Drawing General Undirected Graphs&quot; by Kamada et al. models each node/point as a particle connected by a spring to every other particle. It then reduces the energy of the configuration by iteratively stabilizing every particle. </span></p>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The working principle is as follows:&nbsp;</span></p>
+		<ol type="i">
+			<li style="margin-left: 40px;">
+				<span style="font-size: 18px;">Calculate the &Delta;<sub>m</sub> (force) values for each particle. </span></li>
+			<li style="margin-left: 40px;">
+				<span style="font-size: 18px;">Find the particle for which the &quot;force&quot; is maximum and check if it is greater than a certain tolerance. </span></li>
+			<li style="margin-left: 40px;">
+				<span style="font-size: 18px;">Stabilize the particle by moving it in the appropriate position until the force is less than the tolerance. </span></li>
+			<li style="margin-left: 40px;">
+				<span style="font-size: 18px;">Repeat (i)-(iii) till all particles are stabilized. For the implementation, the energy minimization program takes as input, the graph drawn using the interactive program. The interactive program passes data about the vertices (V) using an array of ordered sets (x, y) where x and y are the pixel values; and the edges (E) using an adjacency matrix. In this part of the code, we switch from dealing with integers to floating point numbers because the domain of working of the algorithm is real numbers. The program then computes the the minimal path between all pairs of vertices (assuming of course that the graph is connected and does not contain any disjoint components) using the Floyd-Warshall algorithm. This step is crucial as these distances are required in computing the constants of the system - the spring constants (k<sub>ij</sub>) and the natural lengths of the springs (l<sub>ij</sub>). Now that the system has been fully described, the program implements the algorithm described in section </span><insert here="" section="" style="font-size: 18px;"> above and computes the final positions of the particles. </insert></li>
+		</ol>
+		<p style="margin-left: 40px;">
+			&nbsp;</p>
+		<h4 style="margin-left: 80px;">
+			<a name="ssues Faced"><span style="font-size: 20px;">2.4.1. Issues Faced</span></a></h4>
+		<ol style="margin-left: 40px;">
+			<li style="margin-left: 40px;">
+				<insert here="" section="" style="font-size: 18px;"><strong>Redundancy:</strong> Spring constants and Natural Lengths were initially described my a matrix of dimensions (n x n) where n is the number of vertices/nodes. However, the system is symmetric i.e l<sub>ij</sub> = l<sub>ji</sub>. Also l<sub>ii</sub> = 0 for all 1&lt;=i&lt;=n and were never needed in any of the calculations. Cleary only the lower triangular matrix parts were required. Hence, we modelled k<sub>ij</sub> and l<sub>ij</sub> as arrays of dimension <sup>n</sup>C<sub>2</sub>. The indexing was was done using a formula of the form l<sub>ij</sub> = l<sub>ij</sub>_array_object[i(i-1)/2 +j]. This however brought about a new issue of asymmetry in two particle systems as given below. </insert></li>
+			<li style="margin-left: 40px;">
+				<insert here="" section="" style="font-size: 18px;"><strong>Asymmetry in two particle systems:</strong> When two free particles are connected via a spring, newton&#39;s third law dictates that forces (-(&part;(E)/&part;(x) <b>i</b> + &part;(E)/&part;(y) <b>j</b>)) experienced by them should be equal and opposite. In our program, we tested the code for two nodes connected via an edge and found that the first particle was invariably collapsing on to the second particle while the latter never moved. Upon printing the values of the forces experienced by each particle showed that they were not equal and opposite. This issue was because of the incorrect indexing.<br />
+				l<sub>ij</sub> = l<sub>ij</sub>_array_object[i(i-1)/2 +j] when i &lt; j,<br />
+				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;l<sub>ij</sub>_array_object[j(j-1)/2 +i] when j &lt; i,<br />
+				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ignore calculation of any value when i == j </insert></li>
+			<li style="margin-left: 40px;">
+				<insert here="" section="" style="font-size: 18px;"> <strong>Large graphs implode, Small graphs explode:</strong> We faced this issue in parallel to the issue (2).<br />
+				The problem was as follows:<br />
+				(i) When a graph is large and spaced out, i.e. distance between farthest two points is comparable to square screen area, in the final graph, all the points collpase onto one very restricted area.<br />
+				(ii) When a graph is small and very closely spaced, i.e distance between farthest two points very much smaller (by about a fraction of 100) than the sqaure screen area, in the final graph, the points explode out and go beyond the limits of square screen area.<br />
+				<br />
+				Ideally, if two graphs have the same structure (are isomorphic) then they should coalesce onto similar final graphs irrespective of the size differences. The fact that they weren't doing so was intriguing. This issue got resolved as soon as we resolved issue (2) and as it turns out, all our guessing and reasoning about this particular problem was completely unnecessary and at best, was a futile attempt by eager physics students to understand this problem physically. </insert></li>
+			<li style="margin-left: 40px;">
+				<insert here="" section="" style="font-size: 18px;"> <strong>Closely spaced graphs still explode:</strong> According the algorithm, the natural length of the spring between the farthest two points is equal to the square screen side (L<sub>0</sub>). Hence, upon stabilizing the system, all particles should lie within the circle whose diameter is L<sub>0</sub>. We did the runs for very small, densely packed graphs and found that the final distances between a few pair of points were exceeding L<sub>0</sub>. Clearly a few springs were not returning to their natural lengths. We argued that the value of tolerance on force (epsion in the paper) was not small enough.<br />
+				We went 15 orders of magnitude down and decreased the tolerance and yet, the (small) graphs kept exploding. Upon going even further down, we found that at very low values (~10<sup>-16</sup>) the algorithm was getting stuck in an infinite loop. We printed the&nbsp;&Delta;<sub>m</sub>&nbsp;(force) values and found that they were oscillating around the tolerance value, but atleast one&nbsp;&Delta;<sub>m</sub>&nbsp;value was above the tolerance at any point of time. It clearly showed that the system was trying to come out of a stable configuration to go to a <italics>stabler</italics> configuration only to get pushed back to it. These are the signs of a local minimum. In order that all springs attain their natural lengths, the system should attain global minimum. Upon investigating the paper, we realized that the algorithm is only an approximation of the actual problem of energy minimization. The iterative approach converges to only <b>local</b> minimum of the energy. Hence, the system may not approach it&#39;s true global minimum of energy. It&#39;s very much possible that graph goes out of the screen. A workaround is to let (L<sub>0</sub>) be less than the square screen area. </insert></li>
+		</ol>
+		<p>
+			<b>&nbsp;</b></p>
+		<h4 style="margin-left: 40px;">
+			<b><a name="Results"><span style="font-size:24px;">Results</span></a></b></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">We got interesting results for various graph shapes. Shown below are a 
+			few animated and non-animated images to show the results that we obtained. These results 
+			were varying with a variation in parameters such as tolerance.</br>Consider the following two figures
+			with similar input graphs on the left and the results on the right for tolerances 10<sup>-1</sup> and 10<sup>-2</sup> respectively. </span></p>
+			
+		<body>
+		 <h5 style="margin-left: 40px;">Tolerance 10<sup>-1</sup></h5>
+		 <img style="margin-left: 40px;width:600px;height:300px;" src="t1.jpg" alt="Tolerance 1e-1">
+		</body>
+		
+		<body>
+		 <h5 style="margin-left: 40px;">Tolerance 10<sup>-2</sup></h5>
+		 <img style="margin-left: 40px;width:600px;height:300px;" src="t2.jpg" alt="Tolerance 1e-2">
+		</body>
+		<p>
+		&nbsp;</p>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">Other examples show interesting results as shown below. Result 2 is a 
+			figure similar to the one described in the paper. </span></p>
+		
+			
+		<body>
+		 <h5 style="margin-left: 40px;">Result 1</h5>
+		 <img style="margin-left: 40px;width:400px;height:300px;" src="1.gif" alt="Result 1">
+		</body>	
+		
+		<body>
+		 <h5 style="margin-left: 40px;">Result 2</h5>
+		 <img style="margin-left: 40px;width:400px;height:300px;" src="2.gif" alt="Result 2">
+		</body>
+		
+		<body>
+		 <h5 style="margin-left: 40px;">Result 3</h5>
+		 <img style="margin-left: 40px;width:400px;height:300px;" src="3.gif" alt="Result 3">
+		</body>
+		
+		<body>
+		 <h5 style="margin-left: 40px;">Result 4</h5>
+		 <img style="margin-left: 40px;width:600px;height:300px;" src="4.png" alt="Result 4">
+		</body>
+		
+		<body>
+		 <h5 style="margin-left: 40px;">Result 5</h5>
+		 <img style="margin-left: 40px;width:400px;height:300px;" src="5.gif" alt="Result 5">
+		</body>
+		
+		<p>
+		&nbsp;</p>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">A few conclusions we drew from analyzing the figures:
+			
+			<ol type="i">
+			<li style="margin-left: 40px;">
+				<span style="font-size: 18px;">After a certain value of tolerance, going down further doesn't
+				create much of a change in the final graph.  </span></li>
+			<li style="margin-left: 40px;">
+			<span style="font-size: 18px;">Chained graphs tend to form a straight line.  </span></li>
+			<li style="margin-left: 40px;">	
+			<span style="font-size: 18px;">Graphs having small angles tend to spread out to increase the angle
+			between two vertices indicating that small angled vertices have high angular strain. </span></li>
+			<li style="margin-left: 40px;">	
+			<span style="font-size: 18px;">Two separate components of a graph which are otherwise disjoint save one
+			edge connecting them tend to move apart in such a way that none of the edges of those components intersect each other.
+			</span></li>
+			<li style="margin-left: 40px;">	
+			<span style="font-size: 18px;">Extremely small and densely packed graphs tend to explode.
+			</span></li>
+			<li style="margin-left: 40px;">	
+			<span style="font-size: 18px;">If the input graph is convex and almost completely connected, the energy of the system
+			is anyway close to the minimum and the algorithm doesn't bring about much of a change.
+			</span></li>
+			
+		</ol>
+			 </span></p>
+			
+		<p>
+			&nbsp;</p>
+	</body>
+</html>
+
