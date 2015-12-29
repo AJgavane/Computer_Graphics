@@ -1,0 +1,204 @@
+<html>
+	<head>
+		<title></title>
+	</head>
+	
+	<body>
+		<h1 style="text-align: center;">
+			<span style="font-size:28px;">Computer Graphics</span></h1>
+		<h2 style="text-align: center;">
+			<span style="font-size:24px;">Assignment - 2</span></h2>
+		<p style="text-align: center;">
+			<span style="font-size:20px;">Ajinkya Gavane (2011B5A7527H), Sudarshan Ghonge (2011B5A7230H), Saurav Agarwalla (2011B5A7522H)</span></p>
+		<p style="text-align: center;">
+			&nbsp;</p>
+			
+		<body>
+		 <img style="margin-left: 400px;width:500px;height:450px;" src="final.png" alt="Class Room">
+		</body>	
+			
+			
+		<h4 style="margin-left: 40px;">
+			<span style="font-size:24px;">Table of Contents</span></h4>
+		<ol>
+			<li>
+				<a href="#Introduction"><span style="font-size:18px;">Introduction</span></a></li>
+				<ol>
+					<li>
+						<span style="font-size: 18px;"><a href="#Compile">How to compile</a></span></li>
+					<li>
+						<a href="#Use"><span style="font-size: 18px;">How to use</span></a></li>
+				</ol>
+			<li>
+				<a href="#Implementation"><span style="font-size: 18px;">Implementation</span></a>
+				<ul>
+					<li>
+						<span style="font-size: 18px;"><a href="#Room">Room</a></span></li>
+					<li>
+						<a href="#Blackboard"><span style="font-size: 18px;">Blackboard</span></a></li>
+					<li>
+						<a href="#Platform"><span style="font-size: 18px;">Platform</span></a></li>
+					<li>
+						<a href="#Table"><span style="font-size: 18px;">Table</span></a></li>
+					<li>
+						<a href="#Chair"><span style="font-size: 18px;">Chair</span></a></li>
+					<li>
+						<a href="#Bench"><span style="font-size: 18px;">Bench</span></a></li>
+					<li>
+						<a href="#Tubelight"><span style="font-size: 18px;">Tubelight</span></a></li>
+					<li>
+						<a href="#Dustbin"><span style="font-size: 18px;">Dustbin</span></a></li>
+					<li>
+						<a href="#Window"><span style="font-size: 18px;">Window</span></a></li>
+					<li>
+						<a href="#Door"><span style="font-size: 18px;">Door</span></a></li>
+				</ul>
+			</li>
+			<li>
+				<span style="font-size: 18px;"><a href="#Results">Results</a></span></li>
+		</ol>
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<a name="Introduction"><span style="font-size:24px;">1. Introduction</span></a></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">
+			This assignment implements  graphical visualization using a three dimensional scene, in this case, a classroom. The program uses the openGL library and a heavy usage of the matrix stack feature. The process flow is divided into 4 steps:</br>
+			1. Create Primitives such as walls, tables, chairs etc.</br>
+			2. Position the primitives in the world co-ordinate space.</br>
+			3. Setup the camera position, view volume and up direction.</br>
+			4. Capture the elements in the view volume and scale.
+           <br/></br>
+           
+                        The scene contains:</br>
+                        18 Benches</br>
+                        1 Blackboard</br>
+                        3 Tube lights</br>
+                        1 dustbin</br>
+                        1 platform</br>
+                        2 windows</br>
+                        1 door</br>
+                        4 walls</br>
+                        1 floor</br>
+           
+           <h3 style="margin-left: 40px;">
+			<a name="Compile"><span style="font-size:22px;">1.1. How to compile</span></a></h3>
+			<p style="margin-left: 40px;margin-left: 60px;">
+			<span style="font-size:18px;">
+            $ make </br>
+            We have used <b>make</b> to ease the process of compilation. 
+            Use <b>make</b> in the same directory to compile the files. Then run the created executable.
+			</span></p>
+			</p>
+           
+           <h3 style="margin-left: 40px;">
+			<a name="Use"><span style="font-size:22px;">1.2. How to use</span></a></h3>
+			<p style="margin-left: 40px;margin-left: 60px;">
+			<span style="font-size:18px;">
+			The key-bindings along with their application are as shown below:</p>
+			<ul style="margin-left: 60px;">
+				<li>
+					<span style="font-size:18px;"><strong>P</strong> or <strong>p</strong> is used to toggle axes on/off</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>V</strong> or <strong>v</strong> is used to toggle values on/off</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>M</strong> or <strong>m</strong> is used to toggle between perspective and orthogonal modes</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>+</strong> and <strong>-</strong> are used to zoom in and zoom out respectively (change the Field of View angles)</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>z</strong> and <strong>Z</strong> are used to change dimensions of view volume</span></li>
+				<li>
+					<span style="font-size:18px;">Rotate camera - <strong>a</strong> or <strong>A</strong>, <strong>d</strong> or <strong>D</strong>, <strong>w</strong> or <strong>W</strong> and <strong>s</strong> or <strong>S</strong> are used to look left, right, up and down respectively</span></li>
+				<li>
+					<span style="font-size:18px;">Navigation keys <strong>right</strong>, <strong>left</strong>, <strong>up</strong> and <strong>down</strong> are used to walk rightward, leftward, forward and backward respectively</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>Page up</strong> and <strong>Page down</strong> keys are used to move camera up and down along the vector</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>Esc</strong> to quit</span></li>
+			</ul>
+			
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<span style="font-size:24px;"><a name="Implementation"></a>2. Implementation</span></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">
+			We used the following primitive structures to construct the scene:
+			</span></p>
+			
+			<ul style="margin-left: 60px;">
+				<li>
+					<span style="font-size:18px;"><a name="Room"></a><strong>Room:</strong> 
+						 GL_QUADS to build the room. We assigned 5 quads, one each for the floor, left wall, right wall, back wall and ceiling. We colored each wall with a different color gradient. 
+					</span>
+				</li>
+				<li>
+					<span style="font-size:18px;"><a name="Blackboard"></a><strong>Blackboard:</strong> Initially, we used the built-in cube() function but since we needed a color gradient on the front face, we created our own primitive to enable blending.</span></li>
+				
+				<li>
+					<span style="font-size:18px;"><a name="Platform"></a><strong>Platform:</strong> Similar to the blackboard case.
+					</span>
+				</li>
+				<li>
+					<span style="font-size:18px;"><a name="Table"></a><strong>Table:</strong> We created a primitive for the table. To build this, we needed three more primitives. First, the upper desk. Second, the lower desk, and third, the support side planks. All of these primitives were scaled and translated to build table at origin. 
+					</span>
+				</li>
+				<li>
+					<span style="font-size:18px;"><a name="Chair"></a><strong>Chair:</strong> For chair For the case of chair, we needed three primitives: one for legs of chair, another for the sitting plank and third for the support bars for back-resting plank. All these primitives were scaled and translated and a chair was created at the origin. 
+					</span>
+				</li>				
+				<li>
+					<span style="font-size:18px;"><a name="Bench"></a><strong>Bench: </strong>
+						For the bench, we put together table and chair then, translated and scaled them and made a primitive out of it. 	
+					</span>
+				</li>
+				<li>
+					<span style="font-size:18px;"><a name="Tubelight"></a><strong>Tubelight: </strong>
+							Tubelight was created by writing a primitive cube function of our own and giving different color gradient for each face. It was then build at origin and scaled to appropriate shape. 
+					</span>
+				</li>
+				<li>
+					<span style="font-size:18px;"><a name="Dustbin"></a><strong>Dustbin: </strong>
+							Dustbin was created using 5 built in glutSolidCube function. 
+					</span>
+				</li>
+				<li>
+					<span style="font-size:18px;"><a name="Window"></a><strong>Window: </strong>
+						Window is created using Quads.	
+					</span>
+				</li>
+				<li>
+					<span style="font-size:18px;"><a name="Door"></a><strong>Door: </strong>
+						Door is drawn using quads.
+					</span></li>
+			</ul>	
+			
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<b><a name="Results"><span style="font-size:24px;">3. Results</span></a></b></h4>
+		<body>
+		<center>
+		 <video align="right" width="500" height="450" controls>
+			  <source src="final_video.webm" type="video/webm">
+			Your browser does not support the video tag.
+		</video>
+		</center>
+		</body>
+		
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">A few conclusions that we could draw:
+			
+			<ol type="i">
+			<li style="margin-left: 40px;">
+				<span style="font-size: 18px;">Gradient change of color through blending on a surface such as back board, face of a table etc, add a realistic essence to the figure.  </span></li>
+			<li style="margin-left: 40px;">
+			<span style="font-size: 18px;">We were able to visualize a 3-D scene on a screen using projections.  </span></li>
+			
+			</span></li>
+			
+		</ol>
+			 </span></p>
+	</body>
+</html>
+
