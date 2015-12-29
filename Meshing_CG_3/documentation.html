@@ -1,0 +1,210 @@
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<h1 style="text-align: center;">
+			<span style="font-size:28px;">Computer Graphics</span></h1>
+		<h2 style="text-align: center;">
+			<span style="font-size:24px;">Assignment - 3</span></h2>
+		<p style="text-align: center;">
+			<span style="font-size:20px;">Ajinkya Gavane (2011B5A7527H), Sudarshan Ghonge (2011B5A7230H), Saurav Agarwalla (2011B5A7522H)</span></p>
+		<p style="text-align: center;">
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<span style="font-size:24px;">Table of Contents</span></h4>
+		<ol>
+			<li>
+				<a href="#Introduction"><span style="font-size:18px;">Introduction</span></a></li>
+				<ol>
+					<li>
+						<span style="font-size: 18px;"><a href="#Compile">How to compile</a></span></li>
+					<li>
+						<a href="#Use"><span style="font-size: 18px;">How to use</span></a></li>
+				</ol>
+			<li>
+				<a href="#Implementation"><span style="font-size: 18px;">Implementation</span></a>
+				<ol>
+					<li>
+						<span style="font-size: 18px;"><a href="#Bezier">Bezier curve of nth degree</a></span></li>
+					<li>
+						<a href="#SurfaceRotation"><span style="font-size: 18px;">Surface of rotation using finite number of curves</span></a></li>
+					<li>
+						<a href="#Mesh"><span style="font-size: 18px;">Mesh the surface</span></a></li>
+					<li>
+						<a href="#offFormat"><span style="font-size: 18px;">.off format</span></a></li>
+						<ol>
+							<li>
+								<a href="#Storage"><span style="font-size: 18px;">Storage</span></a></li>
+							<li>
+								<a href="#Parsing"><span style="font-size: 18px;">Parsing</span></a></li>
+						</ol>
+				</ol>
+			</li>
+			<li>
+				<span style="font-size: 18px;"><a href="#Plotting">Plotting a 3-D surface using arbitrary .off file</a></span></li>
+			<li>
+				<span style="font-size: 18px;"><a href="#Results">Results</a></span></li>
+		</ol>
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<a name="Introduction"><span style="font-size:24px;">1. Introduction</span></a></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">
+                There are three chief goals of this assignment:</br>
+                1. Create bezier curves using 'n' control points in the 2-D plane. </br>
+                2. Rotate the bezier curve around either the x or the y axis and store the resulting surface in a .off file.</br>
+                3. Parse any arbitrary (valid) .off and render its contents using openGL.</br>
+                </br>
+                </br>
+                Bezier curves are approximating curves whose order is greater than equal to 3. Hence there are atleast 4 control points. The curve necessarily passes through the convex hull of the points. Each point on the curve is a linear combination of the control points. The coefficients of the linear combination are dictated by polynomials also known as Bernstein Polynomials.</br>
+                </br>
+                
+                Surfaces of revolution, being symmetrical objects are aesthetically pleasing and like most surfaces, can be discretized using a mesh.</br>
+                </br>
+                
+                The .OFF or "Object File Format" code is standard code format which stores information about the vertices(3-D) and faces of the polygons that make up the surface. The order of the vertices in the file matters because the information about sequence of vertices of a polygon is dictated by a system of numbering, which is essentially the numbering starting with 0, of the vertices.
+           <br/>
+           <br/>
+           
+           <h3 style="margin-left: 40px;">
+			<a name="Compile"><span style="font-size:22px;">1.1. How to compile</span></a></h3>
+			<p style="margin-left: 40px;margin-left: 60px;">
+			<span style="font-size:18px;">
+            	        <b>Bezier Curve, creation and storage of surface of rotation</b></br>
+			In terminal type </br>
+			$ make all && ./assignment3</br>
+			</br>
+			<b>Parse Arbitrary ".off" file display surface</b></br>
+			$ make parse && ./parse</br>
+			</span></p>
+			</p>
+           
+           <h3 style="margin-left: 40px;">
+			<a name="Use"><span style="font-size:22px;">1.2. How to use</span></a></h3>
+			<p style="margin-left: 40px;margin-left: 60px;">
+			<span style="font-size:18px;">
+           
+                        <b>Drawing Bezier Curve</b></br>
+                        (i) Use Left Click to Select point in the screen and add it to the list of control points.</br>
+                        (ii) To edit the postion of an already existing control point, drag and drop using the middle mouse button.</br>
+                        </br>
+                        <b>Rotating the curve</b></br>
+                        (i) On the keyboard press 'x' to rotate around x axis. The surface is saved in "surf_rot_x.off"</br>
+                        (ii) On the keyboard press 'y' to rotate around the y axis. The surface is saved in "surf_rot_y.off"</br>
+                        
+           </br>
+                        <b>Parsing a mesh from a '.off' file</b> </br>
+			<p style="margin-left: 40px;margin-left: 60px;">
+			<span style="font-size:18px;">
+			The key-bindings along with their application are as shown below:</p>
+			<ul style="margin-left: 60px;">
+
+				<li>
+					<span style="font-size:18px;"><strong>+</strong> and <strong>-</strong> are used to zoom in and zoom out respectively (change the Field of View angles)</span></li>
+
+					<span style="font-size:18px;">Rotate camera - <strong>a</strong> or <strong>A</strong>, <strong>d</strong> or <strong>D</strong>, <strong>w</strong> or <strong>W</strong> and <strong>s</strong> or <strong>S</strong> are used to look left, right, up and down respectively</span></li>
+				<li>
+					<span style="font-size:18px;">Navigation keys <strong>right</strong>, <strong>left</strong>, <strong>up</strong> and <strong>down</strong> are used to walk rightward, leftward, forward and backward respectively</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>Page up</strong> and <strong>Page down</strong> keys are used to move camera up and down along the vector</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>Esc</strong> to quit</span></li>
+			</ul>
+			
+		<p>
+                        
+			</span></p>
+			</p>
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<span style="font-size:24px;"><a name="Implementation"></a>2. Implementation</span></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The implementation details are as follows: </span></p>
+		<h3 style="margin-left: 40px;">
+			<a name="Bezier"><span style="font-size:22px;">2.1. Bezier curve of nth degree</span></a></h3>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The program implements the drawing of the Bezier Curve using the deCasteljau's algorithm generalized to  'n' control points. For plotting, the value of the bezier parameter 't' is varied from 0 to 1 in small steps and the corresponding approximated point on the curve is generated using Linear Combination of the control points.</span></p>
+		<p>
+			&nbsp;</p>
+		<h3 style="margin-left: 40px;">
+			<a name="SurfaceRotation"><span style="font-size:22px;">2.2 Surface of rotation using finite number of curves</span></a></h3>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">Upon getting a prompt from the user in the form of an 'x' or a 'y' key press, the program passes the list of 2-D control points to a separate function. This function then rotates the vertex points around the given axis in discrete steps (in our case 10 degrees) and creates a scaffold of control points. Then, for each value of the rotation, theta, it creates a Bezier Curve using a sampling step size (in our case dt=0.1). The surfaces points thus obtained are stored in a separate object. </span></p>
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<a name="Mesh"><span style="font-size:22px;">2.3 Mesh the surface</span></a></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The surface points are used to define triangles by associating each triangle with a sequence. This combined information of the surface points and the faces is then stored into a .off file.</span></p>
+		<p>
+			&nbsp;</p>
+		<h3 style="margin-left: 40px;">
+			<a name="offFormat"><span style="font-size:22px;">2.4 .off format</span></a></h3>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The off format is a crisp way of representing a surface.</br>
+			The first line contains a "OFF" string which declares that format is the Object File Format.</br>
+			The second line contains in order, the number of vertices, number of faces and number of edges.</br>
+			The subsequent n<sub>v</sub> lines contains the co-ordinates of the vertices where n<sub>v</sub> is number of vertices.</br>
+			The n<sub>f</sub> lines after contain the information about the faces in the following way:</br>
+			        (i) The first integer in the line is the number of vertices the face is made of.</br>
+			        (ii) The subsequent n<sub>p</sub> integers in the line are indices of the vertices that make the polygon, where n<sub>p</sub> is the number vertices in the polygon and n<sub>f</sub> is the number of faces (or polygons) that make up the surface.</br>
+			</span></p>
+		<h4 style="margin-left: 80px;">
+			<a name="Storage"><span style="font-size: 20px;">2.4.1. Storage</span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">The program uses elementary file write functions to write data to a .off file.</span></p>
+		<h4 style="margin-left: 80px;">
+			<a name="Parsing"><span style="font-size: 20px;">2.4.2. Parsing</span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">For parsing a .off file, the program uses two objects: </br>
+			A list of vertex objects</br>
+			A list Polygon objects</br>
+			
+			The program populates these data structures using elementary file read functions. The Polygon class contains functions to draw itself in openGl.</br></span></p>
+		<p>
+			<b>&nbsp;</b></p>
+		<h4 style="margin-left: 40px;">
+			<b><a name="Plotting"><span style="font-size:24px;">3. Plotting a 3-D surface using arbitrary .off file</span></a></b></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">After populating the vertex and Polygon Data Structures, the program renders the surface in openGL. </br></span></p>
+		<p>
+			<b>&nbsp;</b></p>
+		<h4 style="margin-left: 40px;">
+			<b><a name="Results"><span style="font-size:24px;">4. Results</span></a></b></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">Shown below are a few images to show the results that we obtained.
+			</span></p>
+			
+		<body>
+		 <h5 style="margin-left: 40px;">Result 1: Image shows a 2-D bezier curve on the left and the resulting surface of revolution around y axis.</h5>
+		 <img style="margin-left: 40px;width:650px;height:400px;" src="1.png" alt="Result 1">
+		</body>	
+		
+		<body>
+		 <h5 style="margin-left: 40px;">Result 2: Image shows a 2-D bezier curve on the left and the resulting surface of revolution around x axis.</h5>
+		 <img style="margin-left: 40px;width:650px;height:400px;" src="2.png" alt="Result 2">
+		</body>
+		
+		<body>
+		 <h5 style="margin-left: 40px;">Result 3: Image shows the comparision of a rendering of surface of revolution around y axis obtained by "geomview" on the left and our program on the right.</h5>
+		 <img style="margin-left: 40px;width:650px;height:400px;" src="3.png" alt="Result 3">
+		</body>
+		
+		<body>
+		 <h5 style="margin-left: 40px;">Result 4:Image shows the comparision of a rendering of surface of revolution around x axis obtained by "geomview" on the left and our program on the right. </h5>
+		 <img style="margin-left: 40px;width:650px;height:400px;" src="5.png" alt="Result 4">
+		</body>
+		
+		<body>
+		 <h5 style="margin-left: 40px;">Result 5: Image shows our program's rendering of a "teapot" using a .off file downloaded from the internet. </h5>
+		 <img style="margin-left: 40px;width:500px;height:400px;" src="4.png" alt="Result 5">
+		</body>
+		
+		<p>
+			&nbsp;</p>
+	</body>
+</html>
+
