@@ -1,0 +1,203 @@
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<h1 style="text-align: center;">
+			<span style="font-size:28px;">Computer Graphics</span></h1>
+		<h2 style="text-align: center;">
+			<span style="font-size:24px;">Project: Cloth simulation using ball-stick model</span></h2>
+		<p style="text-align: center;">
+			<span style="font-size:20px;">Ajinkya Gavane (2011B5A7527H), Sudarshan Ghonge (2011B5A7230H), Saurav Agarwalla (2011B5A7522H)</span></p>
+		<p style="text-align: center;">
+			&nbsp;</p>
+			
+		<body>
+		 <img style="margin-left: 400px;width:500px;height:300px;" src="clothSimulation.png" alt="Cloth">
+		</body>
+		<h4 style="margin-left: 40px;">
+			<span style="font-size:24px;">Table of Contents</span></h4>
+		<ol>
+			<li>
+				<a href="#Introduction"><span style="font-size:18px;">Introduction</span></a></li>
+				<ol>
+					<li>
+						<span style="font-size: 18px;"><a href="#Compile">How to compile</a></span></li>
+					<li>
+						<a href="#Use"><span style="font-size: 18px;">How to use</span></a></li>
+				</ol>
+			<li>
+				<a href="#Implementation"><span style="font-size: 18px;">Implementation</span></a>
+				<ol>
+					<li>
+						<span style="font-size: 18px;"><a href="#Vector">Vector</a></span></li>
+					<li>
+						<a href="#ParticleProperties"><span style="font-size: 18px;">Particle properties</span></a></li>
+					<li>
+						<a href="#Constraints"><span style="font-size: 18px;">Constraints</span></a></li>
+					<li>
+						<a href="#Cloth"><span style="font-size: 18px;">Cloth</span></a></li>
+					<li>
+						<a href="#Forces"><span style="font-size: 18px;">Forces</span></a></li>
+				</ol>
+			</li>
+			<li>
+				<span style="font-size: 18px;"><a href="#Results">Results</a></span></li>
+		</ol>
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<a name="Introduction"><span style="font-size:24px;">1. Introduction</span></a></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">
+			Our project entails implementing ball-stick model for cloth simulation. 
+           <br/>
+           <br/>
+           
+           <h3 style="margin-left: 40px;">
+			<a name="Compile"><span style="font-size:22px;">1.1. How to compile</span></a></h3>
+			<p style="margin-left: 40px;margin-left: 60px;">
+			<span style="font-size:18px;">
+            $ make </br>
+We have used make to ease the process of compilation. Use make in the same directory to compile the files. Then run the created executable.
+			</span></p>
+			</p>
+           
+           <h3 style="margin-left: 40px;">
+			<a name="Use"><span style="font-size:22px;">1.2. How to use</span></a></h3>
+			<p style="margin-left: 40px;margin-left: 60px;">
+			<span style="font-size:18px;">
+           	The key-bindings along with their application are as shown below:</p>
+			<ul style="margin-left: 60px;">
+				<li>
+					<span style="font-size:18px;"><strong>I or i </strong>is used to move ball forward</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>K or k </strong>is used to move ball backwards</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>J or j </strong>is used to move ball leftwards</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>L or l </strong>is used to move ball rightwards</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>U or u </strong>is used to move ball upwards</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>O or o </strong>is used to move ball downwards</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>R or r </strong>is used to reset ball position</span></li>
+				<li>
+					<span style="font-size:18px;">Rotate camera - <strong>a</strong> or <strong>A</strong>, <strong>d</strong> or <strong>D</strong>, <strong>w</strong> or <strong>W</strong> and <strong>s</strong> or <strong>S</strong> are used to look left, right, up and down respectively</span></li>
+				<li>
+					<span style="font-size:18px;">Navigation keys <strong>right</strong>, <strong>left</strong>, <strong>up</strong> and <strong>down</strong> are used to walk rightward, leftward, forward and backward respectively</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>Page up</strong> and <strong>Page down</strong> keys are used to move camera up and down along the vector</span></li>
+				<li>
+					<span style="font-size:18px;"><strong>Esc</strong> to quit</span></li>
+			</ul>
+			</span></p>
+			</p>
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<span style="font-size:24px;"><a name="Implementation"></a>2. Implementation</span></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The implementation details are as follows: </span></p>
+		<h3 style="margin-left: 40px;">
+			<a name="Vector"><span style="font-size:22px;">2.1. Vector</span></a></h3>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The vector class includes various vector operations like addition, subtraction,
+			 multiplication and division with a scalar, magnitude, square of magnitude, dot product and cross product and
+			  vector initialisation.</span></p>
+		<p>
+			&nbsp;</p>
+		<h3 style="margin-left: 40px;">
+			<a name="ParticleProperties"><span style="font-size:22px;">2.2 Particle properties</span></a></h3>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The particle class contains the attributes and behaviour exhibited by the particles used in the simulation. The main attibutes includes:</span>
+			<ul><span style="font-size:18px;">
+				<li style="margin-left: 40px;"> current position of the particle,</li>
+				<li style="margin-left: 40px;"> old position of the particle,</li>
+				<li style="margin-left: 40px;"> movable, specify whether particleis movable or not,</li>
+				<li style="margin-left: 40px;"> mass of the particle </li>
+				<li style="margin-left: 40px;"> acceleration.</span>
+			</ul>
+			
+			</br>
+			<p style="margin-left: 40px;">
+			<span style="font-size:18px;">
+			The main behaviours (methods) of the particle include adding force to the particle, setting
+			its offset position and making it unmovable.
+			</span></p>
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<a name="Constraints"><span style="font-size:22px;">2.3 Constraints</span></a></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The constraint involved makes sure that the distance between two specified particles
+			remains constant. As shown in the figure below, there are a total of sixteen constraints for each
+			 internal particle from the original particle in question to its first and second nearest neighbours. 
+			<body>
+			 <img style="margin-left: 40px;width:400px;height:380px;" src="constraints.png" alt="Cloth constraints">
+			</body>
+			</span></p>
+		<p>
+			&nbsp;</p>
+		<h3 style="margin-left: 40px;">
+			<a name="Cloth"><span style="font-size:22px;">2.4 Cloth</span></a></h3>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">This is the class that integrates all the other classes to create our final product - 
+			cloth. It has numerous methods to specify the number of particles along the height and width, adding constraints and drawing
+			triangles as specified in our algorithm. </span></p>
+		<!--
+		<h4 style="margin-left: 80px;">
+			<a name="Storage"><span style="font-size: 20px;">2.4.1. Storage</span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">EDIT ME!</span></p>
+		<h4 style="margin-left: 80px;">
+			<a name="Parsing"><span style="font-size: 20px;">2.4.2. Parsing</span></a></h4>
+		<p style="margin-left: 80px;">
+			<span style="font-size:18px;">EDIT ME!</span></p>
+		-->
+		<p>
+			<b>&nbsp;</b></p>
+		<h4 style="margin-left: 40px;">
+			<a name="Forces"><span style="font-size:22px;">2.5 Forces</span></a></h4>
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">The forces acting on the cloth are gravity and the force exerted by the sphere on
+			collision. </span></p>
+		
+		<h4 style="margin-left: 40px;">
+			<span style="font-size:20px;">Implementing Verlet integration</span></h4>	
+		<p style="margin-left: 40px;">
+			<span style="font-size:18px;">This integration scheme does not store velocity but computes it on the run.
+			</br>
+			Given a particle whose position is <b>x</b> and velocity <b>v</b>, then in the timestep loop the new position <b>x'</b> and velocity <b>v'</b>
+			are computed as: </br>
+			<b>x'</b> = <b>x</b> + <b>v</b>dt</br>
+			<b>v'</b> = <b>v</b> + <b>a</b>dt</br>
+			where <b>a</b> = acceleration.
+			</br>
+			In this method, instead of storing current position and velocity of a particle we store current position <b>x</b> and previous
+			position <b>x*</b>. Keeping the timestamp fixed, the update rule (or integration step) is then:</br>
+			<b>x'</b> = 2<b>x</b> - <b>x*</b> + <b>a</b>dt<sup>2</sup></br>
+			<b>x*</b> = <b>x'</b>
+			</br>
+			The term 2<b>x</b> - <b>x*</b> = <b>x</b> + (<b>x</b> - <b>x*</b>) and (<b>x</b> - <b>x*</b>) is an approximation of current velocity.</br>
+			
+			</span></p>
+		
+		<p>
+			&nbsp;</p>
+		<h4 style="margin-left: 40px;">
+			<b><a name="Results"><span style="font-size:24px;">3. Results</span></a></b></h4>
+		<body>
+		<center>
+		 <video align="right" width="500" height="300" controls>
+			  <source src="final_video.webm" type="video/webm">
+			Your browser does not support the video tag.
+		</video>
+		</center>
+		<p>
+			&nbsp;</p>
+		</body>
+	</body>
+</html>
+
